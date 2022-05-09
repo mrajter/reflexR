@@ -1,6 +1,7 @@
 Package: reflexR
 Title: FLEXTABLE BASED STATISTICS
 Version: 0.0.0.9000
+Date: 2022-05-09
 Authors@R: 
     person("Miroslav", "Rajter", , "miroslav.rajter@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-2608-3196"))
