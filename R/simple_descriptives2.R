@@ -469,17 +469,19 @@ p.val.transf <- function(vari, option) {
     }
     vari <- vari2
   } else if (option$p.type == "star") {
+    vari2=c()
     for (i in 1:length(vari)) {
       if (vari[i] >= 0.05) {
-        vari[i] <- "-"
+        vari2 <- c(vari2, "-")
       } else if (vari[i] < 0.001) {
-        vari[i] <- "***"
+        vari2 <- c(vari2, "***")
       } else if (vari[i] < 0.01) {
-        vari[i] <- "**"
+        vari2 <- c(vari2, "**")
       } else if (vari[i] < 0.05) {
-        vari[i] <- "*"
+        vari2 <- c(vari2, "*")
       }
     }
+    vari=vari2
   }
   return(vari)
 }
