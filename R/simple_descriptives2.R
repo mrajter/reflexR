@@ -62,15 +62,15 @@ des.flex <- function(data, vars, param_set = "standard", by = NA, by_total = TRU
 
   # workflow
   if (is.na(by) == TRUE) {
-    res <- descriptives(data, vars, param_set, deci = deci, option = r.flex.opts, res.names = res.names)
+    res <- descriptives(data, vars, param_set, deci = deci, option = option, res.names = res.names)
   } else {
     res_list <- list()
     for (counter_by in 1:nrow(by_df)) {
-      res_list[[counter_by]] <- descriptives(data[data[[by]] == by_df[counter_by, 1], ], vars, param_set, deci = deci, option = r.flex.opts, res.names = res.names)
+      res_list[[counter_by]] <- descriptives(data[data[[by]] == by_df[counter_by, 1], ], vars, param_set, deci = deci, option = option, res.names = res.names)
       res_list[[counter_by]]$Variable <- res.names #subsetting looses variable labels. This is the correction
     }
     if (by_total == TRUE) {
-      res_list[[nrow(by_df) + 1]] <- descriptives(data, vars, param_set, deci = deci, option = r.flex.opts)
+      res_list[[nrow(by_df) + 1]] <- descriptives(data, vars, param_set, deci = deci, option = option)
       by_df <- rbind(by_df, c(nrow(by_df) + 1, "Total"))
     }
     # create data frame with results
@@ -455,17 +455,19 @@ p.val.transf <- function(vari, option) {
   if (option$p.type == "exact") {
     vari <- format(round(vari, 3), nsmall = 3, decimal.mark = option$d.p)
   } else if (option$p.type == "<>") {
+    vari2=c()
     for (i in 1:length(vari)) {
       if (vari[i] >= 0.05) {
-        vari[i] <- paste(">", lead.zero.char, option$d.p, "05", sep = "")
+        vari2 <- c(vari2, paste(">", lead.zero.char, option$d.p, "05", sep = ""))
       } else if (vari[i] < 0.001) {
-        vari[i] <- paste("<", lead.zero.char, option$d.p, "001", sep = "")
+        vari2 <- c(vari2, paste("<", lead.zero.char, option$d.p, "001", sep = ""))
       } else if (vari[i] < 0.01) {
-        vari[i] <- paste("<", lead.zero.char, option$d.p, "01", sep = "")
+        vari2 <- c(vari2, paste("<", lead.zero.char, option$d.p, "01", sep = ""))
       } else if (vari[i] < 0.05) {
-        vari[i] <- paste("<", lead.zero.char, option$d.p, "05", sep = "")
+        vari2 <- c(vari2, paste("<", lead.zero.char, option$d.p, "05", sep = ""))
       }
     }
+    vari <- vari2
   } else if (option$p.type == "star") {
     for (i in 1:length(vari)) {
       if (vari[i] >= 0.05) {
