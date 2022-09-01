@@ -15,9 +15,7 @@ star.pval.apa(num, pval, has.zero, round = 3, option = r.flex.opts)
 
 \item{round}{integer - number of rounding places}
 
-\item{option}{\itemize{
-\item r.flex.opts
-}}
+\item{option}{r.flex.opts}
 }
 \value{
 string formated in a desired style

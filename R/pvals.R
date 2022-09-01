@@ -4,7 +4,7 @@
 #' @param pval numeric - p value. If there is no need for stars this parameter should be set to NA
 #' @param has.zero boolean - should it include leading zero (see APA 7 rules)
 #' @param round integer - number of rounding places
-#' @param option - r.flex.opts
+#' @param option r.flex.opts
 #'
 #' @return string formated in a desired style
 #' @export
@@ -29,8 +29,13 @@ star.pval.apa <- function(num, pval, has.zero, round = 3, option = r.flex.opts) 
     stop("When the number is 1 or higher, has.zero should be set to TRUE by APA7 rules")
   }
 
-  if (num < 1 & has.zero == F) {
+  if (num < 1 & num >= 0 & has.zero == F) {
     num.char <- substr(num.char, 2, nchar(num.char))
+  }
+
+  # don't forget the negative numbers
+  if (num < 0 & num >= -1 & has.zero == F) {
+    num.char <- paste0("-", substr(num.char, 3, nchar(num.char)))
   }
   num.char <- gsub(".", option$d.p, num.char, fixed = TRUE)
 
