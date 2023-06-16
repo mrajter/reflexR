@@ -44,7 +44,6 @@ im_on_fire <- function() {
 
   # assign to officer variable
   assign("doc", officer::read_docx("Templates/template.docx"), envir = r.flex.opts)
-
 }
 
 
@@ -53,23 +52,46 @@ im_on_fire <- function() {
 #'
 #' Used as a direct way to set the options variable used in other functions. The preferred way is by using im_on_fire() function.
 #' This should be used when you want to work without other perks of im_on_fire().
-#'
+#' @param type  if "interactive" it will ask you for each parameter. Otherwise (default), the parameters need to be defined as function parameters.
+#' @param lang default language for the package. Currently "hr" or "en"
+#' @param d.p set decimal point to "." or ","
+#' @param lead.zero would you like to have a leading zero (T/F)
+#' @param p.type How should p values be displayed("<>", "exact", "star")
+#' @param tab.caption Should table captions be put in word file (T/F)
 #' @return r.flex.opts environment used in various functions
 #' @export
-set.r.flex.opts <- function() {
-  lang=readline(prompt="Set language (hr or en): ")
-  d.p=readline(prompt="Set decimal point type(. or ,): ")
-  lead.zero=readline(prompt="Would you like to have a leading zero (T/F): ")
-  p.type=readline(prompt="How should p values be displayed(<>, exact, star): ")
-  tab.caption=readline(prompt="Should table captions be put in word file (T/F): ")
+set.r.flex.opts <- function(type = "fixed", lang = NULL, d.p = NULL, lead.zero = NULL, p.type = NULL, tab.caption = NULL) {
+  if (type == "interactive") {
+    lang <- readline(prompt = "Set language (hr or en): ")
+    d.p <- readline(prompt = "Set decimal point type(. or ,): ")
+    lead.zero <- readline(prompt = "Would you like to have a leading zero (T/F): ")
+    p.type <- readline(prompt = "How should p values be displayed(<>, exact, star): ")
+    tab.caption <- readline(prompt = "Should table captions be put in word file (T/F): ")
 
-  r.flex.opts$lang=lang
-  r.flex.opts$d.p=d.p
-  r.flex.opts$lead.zero=as.logical(lead.zero)
-  r.flex.opts$p.type=p.type
-  r.flex.opts$tab.caption=as.logical(tab.caption)
+    r.flex.opts$lang <- lang
+    r.flex.opts$d.p <- d.p
+    r.flex.opts$lead.zero <- as.logical(lead.zero)
+    r.flex.opts$p.type <- p.type
+    r.flex.opts$tab.caption <- as.logical(tab.caption)
+  }
 
-
+  if (type == "fixed") {
+    if (is.null(lang) == F) {
+      r.flex.opts$lang <- lang
+    }
+    if (is.null(d.p) == F) {
+      r.flex.opts$d.p <- d.p
+    }
+    if (is.null(lead.zero) == F) {
+      r.flex.opts$lead.zero <- lead.zero
+    }
+    if (is.null(p.type) == F) {
+      r.flex.opts$p.type <- p.type
+    }
+    if (is.null(tab.caption) == F) {
+      r.flex.opts$tab.caption <- tab.caption
+    }
+  }
 }
 
 
@@ -87,7 +109,7 @@ pval.apa <- function(num, deci = 3, equal = F, option = r.flex.opts) {
   } else {
     res <- format(round(num, deci), nsmall = deci, decimal.mark = option$d.p)
 
-    if (abs(num)==1) {
+    if (abs(num) == 1) {
       res <- res
     } else if (num < 0) {
       res <- substring(res, 3)

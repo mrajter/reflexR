@@ -4,7 +4,27 @@
 \alias{set.r.flex.opts}
 \title{Set r.flex.opts variable}
 \usage{
-set.r.flex.opts()
+set.r.flex.opts(
+  type = "fixed",
+  lang = NULL,
+  d.p = NULL,
+  lead.zero = NULL,
+  p.type = NULL,
+  tab.caption = NULL
+)
+}
+\arguments{
+\item{type}{if "interactive" it will ask you for each parameter. Otherwise (default), the parameters need to be defined as function parameters.}
+
+\item{lang}{default language for the package. Currently "hr" or "en"}
+
+\item{d.p}{set decimal point to "." or ","}
+
+\item{lead.zero}{would you like to have a leading zero (T/F)}
+
+\item{p.type}{How should p values be displayed("<>", "exact", "star")}
+
+\item{tab.caption}{Should table captions be put in word file (T/F)}
 }
 \value{
 r.flex.opts environment used in various functions
