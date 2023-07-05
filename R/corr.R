@@ -56,9 +56,9 @@ cor.flex=function(df, na="listwise", type="pearson", labs="numbered", diag="bott
   for (i in 1:ncol(q.c)){
     for (j in 1:nrow(q.c)) {
       if (j!=i) {
-        if (q.p[j,i]<0.001) {q.c[j,i]=paste(q.c[j,i],"*", sep="")}
-        if (q.p[j,i]<0.01) {q.c[j,i]=paste(q.c[j,i],"*", sep="")}
-        if (q.p[j,i]<0.05) {q.c[j,i]=paste(q.c[j,i],"*", sep="")}
+        if (is.na(q.p[j,i])==FALSE & q.p[j,i]<0.001) {q.c[j,i]=paste(q.c[j,i],"*", sep="")}
+        if (is.na(q.p[j,i])==FALSE & q.p[j,i]<0.01) {q.c[j,i]=paste(q.c[j,i],"*", sep="")}
+        if (is.na(q.p[j,i])==FALSE & q.p[j,i]<0.05) {q.c[j,i]=paste(q.c[j,i],"*", sep="")}
 
         #diagonals
         if (diag=="top") {if (j>i) {q.c[j,i]=""}}
