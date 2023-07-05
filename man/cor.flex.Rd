@@ -32,10 +32,13 @@ cor.flex(
 \item{lang}{language ("hr" (default), "en")}
 }
 \value{
-list with two elements:
+list with elements:
 \itemize{
 \item $matrix - flextable object
 \item $N - number of participants (range if na="pairwise")
+\item $tab_cor - data frame with correlations
+\item $tab_p - data frame with p values
+\item $tab_cor - data frame with N
 }
 }
 \description{
