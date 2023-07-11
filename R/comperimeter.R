@@ -188,10 +188,10 @@ comperimeter <- function(data, form, by = NA, by_total = TRUE, param = TRUE, m.d
     if (is.na(r.names$N) | r.names$N == 0) {
       fre.t <- c(fre.t, NA)
     } else {
-      fre.t <- c(fre.t, length(data[[v.names[1]]][data[[v.names[1]]] == v.labs$vals[i]]) * 100 / r.names$N[1])
+      fre.t <- c(fre.t, length(data[[v.names[1]]][data[[v.names[1]]] == v.labs$vals[i] & is.na(data[[v.names[1]]])==FALSE]) * 100 / r.names$N[1])
     }
   }
-  r.fre <- data.frame(t(fre.t))
+  r.fre <- data.frame(t(fre.t)) #transpose
   names(r.fre) <- v.labs$labs
 
 
@@ -240,7 +240,7 @@ comperimeter <- function(data, form, by = NA, by_total = TRUE, param = TRUE, m.d
         if (r.names$N[i] == 0) {
           fre.t <- c(fre.t, NA)
         } else {
-          fre.t <- c(fre.t, length(data[[v.names[i]]][data[[v.names[i]]] == v.labs$vals[j]]) * 100 / r.names$N[i])
+          fre.t <- c(fre.t, length(data[[v.names[i]]][data[[v.names[i]]] == v.labs$vals[j] & is.na(data[[v.names[1]]])==FALSE]) * 100 / r.names$N[i])
         }
       }
       r.fre <- rbind(r.fre, fre.t)
