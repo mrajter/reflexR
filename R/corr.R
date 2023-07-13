@@ -27,7 +27,7 @@
 #'
 
 cor.flex=function(df, na="listwise", type="pearson", labs="numbered", diag="bottom", lang="hr"){
-  if (na=="listwise") {df=df[stats::complete.cases(df),]}
+  if (na=="listwise") {df = df %>% dplyr::filter(stats::complete.cases(df))  }
 
   # q=Hmisc::rcorr(as.matrix(df), type=type)  ##stara varijanta - u njoj je problem da puca kad nema varijabliliteta
   rez_r=as.data.frame(matrix(nrow = ncol(df), ncol=ncol(df)))
@@ -49,7 +49,7 @@ cor.flex=function(df, na="listwise", type="pearson", labs="numbered", diag="bott
 
   q.p=rez_p
 
-
+  q.c=q.c %>% dplyr::mutate_all(trimws) #20230713 format je stavljao razmak ispred
   q.c[q.c == "1.000"] <- "-"
 
   #adding stars

@@ -14,7 +14,6 @@ Imports:
     dplyr,
     flextable,
     formula.tools,
-    Hmisc,
     labelled,
     magrittr,
     nFactors,
