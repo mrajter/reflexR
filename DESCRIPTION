@@ -28,4 +28,6 @@ Imports:
     tidyselect,
     utils,
     effectsize,
-    DescTools
+    DescTools,
+    car,
+    Hmisc
