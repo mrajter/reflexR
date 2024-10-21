@@ -22,6 +22,8 @@ small.t.flex(
 
 \item{multi}{a parameter}
 
+\item{groups}{a parameter}
+
 \item{effect}{a parameter}
 
 \item{type}{a parameter}

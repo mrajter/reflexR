@@ -22,5 +22,6 @@ data frame with labelled variable
 Add variable and value labels to a variable
 }
 \examples{
-data.frame(a=c(1,1,1,2,2,2), b=c(1,2,3,1,2,3)) \%>\% var_to_labelled("a", "Age", c("1"="Young", "2"="Old"))
+data.frame(a=c(1,1,1,2,2,2), b=c(1,2,3,1,2,3)) \%>\%
+  var_to_labelled("a", "Age", c("1"="Young", "2"="Old"))
 }

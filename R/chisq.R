@@ -1,14 +1,113 @@
-
-
-#' Claculate chi-square test with post-hocs
+#' calculate chi square test for single independent and multiple dependent variables
 #'
-#' @param data labelled data frame
-#' @param form formula with two variables
-#' @param post_hoc_chi logical. If TRUE (default), post-hoc chi-square tests are calculated
+#' @param data dataset with variables with defined variable and value labels
+#' @param form formula. Independent variable must be on the right side of the formula. Function allows for only one dependent variable which will be shown in the columns
 #'
-#' @return Flextable with results
+#' @return flextable with results
 #' @export
-chisq.flex <- function(data, form, post_hoc_chi = TRUE) {
+#'
+#' @examples
+#' #create data frame
+#' dataset <- data.frame(ind=c(1,1,1,2,2,2,1,1,1,2,2,2),
+#'                       dep1=c(1,2,3,1,2,3,1,2,3,1,2,3),
+#'                       dep2=c(1,2,2,1,3,3,1,2,2,1,3,3)) %>%
+#'   var_to_labelled("ind", "Independent", c("1"="No", "2"="Yes")) %>%
+#'   var_to_labelled("dep1", "Dependent 1", c("1"="A", "2"="B", "3"="C")) %>%
+#'   var_to_labelled("dep2", "Dependent 2", c("1"="D", "2"="E", "3"="F"))
+#' #calculate test
+#' chisq.flex(dataset, dep1+dep2~ind)
+chisq.flex=function(data, form) {
+  #idi jednu po jednu varijablu
+  vari_c <- formula.tools::rhs.vars(form)[1]
+  vari_r <- formula.tools::lhs.vars(form)
+  varijable=c()
+
+  for (i in 1:length(vari_r)) {
+    #pošalji formulu za jednostavni hi kvadrat test
+    form2 <- stats::as.formula(paste0(vari_r[i], "~", vari_c))
+    q=chisq.sing(data, form2, post_hoc_chi = FALSE)$body$dataset
+    if (i==1) {
+      out=q
+      varijable=c(varijable, names(out)[1])
+      names(out)[1]="Odgovor"
+
+    } else {
+      varijable=c(varijable, names(q)[1])
+      names(q)[1]="Odgovor"
+      out=rbind(out, q)
+    }
+  }
+
+  #napravi tablicu
+  stupac1=c()
+  for (i in 1:length(vari_r)) {
+    stupac1=c(stupac1, rep(check.labs(data[[vari_r[i]]])$var_lab, length(check.labs(data[[vari_r[i]]])$val_lab$value)+1))
+  }
+
+  out=cbind(stupac1,out)
+  names(out)[1]="Varijabla"
+
+  if(names(out)[length(out)]=="V") {
+    vrsta="hi"
+  } else {
+    vrsta="f"
+  }
+
+  imena2=names(out)
+  for (i in 4:(length(imena2)-3)) {
+    imena2[i]="%"
+  }
+  #if(vrsta=="f") {
+  imena2[length(imena2)-2]="%"
+  #}
+
+
+  tbl=out %>% flextable::flextable() %>%
+    flextable::add_header_row(top = FALSE, values = imena2) %>%
+    flextable::hline(i = 2, border = officer::fp_border(), part = "header") %>%
+    flextable::hline(i = 1, border = officer::fp_border(), part = "header") %>%
+    flextable::merge_v(part = "header")
+
+  brojac=0
+  for (k in 1:length(vari_r)) {
+    duzina=length(check.labs(data[[vari_r[k]]])$val_lab$value)+1
+    tbl=tbl %>%
+      flextable::merge_at(i=(brojac+1):(brojac+duzina), j = 1, part = "body") %>%
+      flextable::merge_at(i=(brojac+1):(brojac+duzina), j = (length(imena2)-1), part = "body") %>%
+      flextable::merge_at(i=(brojac+1):(brojac+duzina), j = length(imena2), part = "body") %>%
+      flextable::hline(i=(brojac+duzina-1), j=2:(length(imena2)-3), border = officer::fp_border(), part = "body")
+
+    #if (vrsta=="f") {
+    tbl=tbl %>% flextable::hline(i=(brojac+duzina-1), j=(length(imena2)-2), border = officer::fp_border(), part = "body")
+    #}
+    tbl=tbl %>% flextable::hline(i = (brojac+duzina), border = officer::fp_border(), part = "body")
+    brojac=brojac+duzina
+  }
+  tbl=tbl %>%
+    flextable::align(align = "center", part = "all") %>%
+    flextable::align(j = 1, align = "left", part = "body") %>%
+    flextable::padding(padding = 0, part = "all") %>%
+    flextable::autofit() %>%
+    flextable::fix_border_issues()
+
+
+
+
+  return(tbl)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+chisq.sing <- function(data, form, post_hoc_chi = TRUE) {
   vari_c <- formula.tools::rhs.vars(form)[1]
   vari_r <- formula.tools::lhs.vars(form)[1]
 

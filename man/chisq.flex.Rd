@@ -2,20 +2,29 @@
 % Please edit documentation in R/chisq.R
 \name{chisq.flex}
 \alias{chisq.flex}
-\title{Claculate chi-square test with post-hocs}
+\title{calculate chi square test for single independent and multiple dependent variables}
 \usage{
-chisq.flex(data, form, post_hoc_chi = TRUE)
+chisq.flex(data, form)
 }
 \arguments{
-\item{data}{labelled data frame}
+\item{data}{dataset with variables with defined variable and value labels}
 
-\item{form}{formula with two variables}
-
-\item{post_hoc_chi}{logical. If TRUE (default), post-hoc chi-square tests are calculated}
+\item{form}{formula. Independent variable must be on the right side of the formula. Function allows for only one dependent variable which will be shown in the columns}
 }
 \value{
-Flextable with results
+flextable with results
 }
 \description{
-Claculate chi-square test with post-hocs
+calculate chi square test for single independent and multiple dependent variables
+}
+\examples{
+#create data frame
+dataset <- data.frame(ind=c(1,1,1,2,2,2,1,1,1,2,2,2),
+                      dep1=c(1,2,3,1,2,3,1,2,3,1,2,3),
+                      dep2=c(1,2,2,1,3,3,1,2,2,1,3,3)) \%>\%
+  var_to_labelled("ind", "Independent", c("1"="No", "2"="Yes")) \%>\%
+  var_to_labelled("dep1", "Dependent 1", c("1"="A", "2"="B", "3"="C")) \%>\%
+  var_to_labelled("dep2", "Dependent 2", c("1"="D", "2"="E", "3"="F"))
+#calculate test
+chisq.flex(dataset, dep1+dep2~ind)
 }

@@ -98,6 +98,7 @@ ttest.flex <- function(data, form, groups = c(0, 0), effect = "d", type = "two.s
 #' @param data a parameter
 #' @param form a parameter
 #' @param multi a parameter
+#' @param groups a parameter
 #' @param effect a parameter
 #' @param type a parameter
 #' @param deci a parameter
