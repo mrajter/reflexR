@@ -38,3 +38,15 @@ list with table as flextable and data frame with results
 \description{
 Independent samples t-test
 }
+\examples{
+#create data frame
+dataset <- data.frame(ind=c(1,1,1,2,2,2,1,1,1,2,2,2),
+                      dep1=c(1,2,3,1,2,3,1,2,3,1,2,3),
+                      dep2=c(1,2,2,1,3,3,1,2,2,1,3,3)) \%>\%
+  var_to_labelled("ind", "Independent", c("1"="No", "2"="Yes")) \%>\%
+  var_to_labelled("dep1", "Dependent 1") \%>\%
+  var_to_labelled("dep2", "Dependent 2")
+
+#calculate test
+ttest.flex(dataset, dep1+dep2~ind)
+}

@@ -12,7 +12,7 @@
 #' @return list with table as flextable and data frame with results
 #' @export
 #'
-#' #' @examples
+#' @examples
 #' #create data frame
 #' dataset <- data.frame(ind=c(1,1,1,2,2,2,1,1,1,2,2,2),
 #'                       dep1=c(1,2,3,1,2,3,1,2,3,1,2,3),
