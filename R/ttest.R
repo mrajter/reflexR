@@ -12,6 +12,17 @@
 #' @return list with table as flextable and data frame with results
 #' @export
 #'
+#' #' @examples
+#' #create data frame
+#' dataset <- data.frame(ind=c(1,1,1,2,2,2,1,1,1,2,2,2),
+#'                       dep1=c(1,2,3,1,2,3,1,2,3,1,2,3),
+#'                       dep2=c(1,2,2,1,3,3,1,2,2,1,3,3)) %>%
+#'   var_to_labelled("ind", "Independent", c("1"="No", "2"="Yes")) %>%
+#'   var_to_labelled("dep1", "Dependent 1") %>%
+#'   var_to_labelled("dep2", "Dependent 2")
+#'
+#' #calculate test
+#' ttest.flex(dataset, dep1+dep2~ind)
 ttest.flex <- function(data, form, groups = c(0, 0), effect = "d", type = "two.sided", deci = 2, conf.level = 0.95, lang = "hr") {
   # data: data frame
   # form: formula
@@ -239,16 +250,22 @@ t.to.flex <- function(rez, data, deci, effect, nvars, lang = "hr") {
     flextable::flextable() %>%
     flextable::align(align = "center", part = "all") %>%
     flextable::align(j = 1, align = "left", part = "body") %>%
-    flextable::merge_v(j=1, part = "body") %>%
-    flextable::merge_v(j=6:8, part = "body") %>%
+    #flextable::merge_v(j=1, part = "body") %>%
+    #flextable::merge_v(j=6:8, part = "body") %>%
     flextable::hline(i = 1, border = officer::fp_border(color = "black", width = 1), part = "header") %>%
     flextable::hline_top(part = "header")
 
+    for (i in 1:nrow(rez)){
+      if (i%%2==0) {
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
+        tab <- tab %>% flextable::hline(i = br * 2, border = officer::fp_border(color = "black", width = 1), part = "body")
+      }
+    }
 
 
-  for (br in 1:nvars) {
-    tab <- tab %>% flextable::hline(i = br * 2, border = officer::fp_border(color = "black", width = 1), part = "body")
-  }
   tab <- tab %>%
     flextable::autofit() %>%
     flextable::width(j = 1, width = 4, unit = "cm") %>%
