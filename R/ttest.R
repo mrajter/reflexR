@@ -239,16 +239,22 @@ t.to.flex <- function(rez, data, deci, effect, nvars, lang = "hr") {
     flextable::flextable() %>%
     flextable::align(align = "center", part = "all") %>%
     flextable::align(j = 1, align = "left", part = "body") %>%
-    flextable::merge_v(j=1, part = "body") %>%
-    flextable::merge_v(j=6:8, part = "body") %>%
+    #flextable::merge_v(j=1, part = "body") %>%
+    #flextable::merge_v(j=6:8, part = "body") %>%
     flextable::hline(i = 1, border = officer::fp_border(color = "black", width = 1), part = "header") %>%
     flextable::hline_top(part = "header")
 
+    for (i in 1:nrow(rez)){
+      if (i%%2==0) {
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
+        tab <- tab %>% flextable::hline(i = br * 2, border = officer::fp_border(color = "black", width = 1), part = "body")
+      }
+    }
 
 
-  for (br in 1:nvars) {
-    tab <- tab %>% flextable::hline(i = br * 2, border = officer::fp_border(color = "black", width = 1), part = "body")
-  }
   tab <- tab %>%
     flextable::autofit() %>%
     flextable::width(j = 1, width = 4, unit = "cm") %>%
