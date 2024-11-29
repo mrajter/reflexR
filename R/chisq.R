@@ -2,7 +2,7 @@
 #'
 #' @param data dataset with variables with defined variable and value labels
 #' @param form formula. Independent variable must be on the right side of the formula. Function allows for only one dependent variable which will be shown in the columns
-#' @param pct.calc calculation of percentages. "by_dep" (default) calculates percentages by dependent variable, "by_ind" calculates percentages by independent variable
+#' @param pct.calc (do not use...yet) calculation of percentages. "by_dep" (default) calculates percentages by dependent variable, "by_ind" calculates percentages by independent variable
 #'
 #' @return flextable with results
 #' @export
