@@ -2,6 +2,7 @@
 #'
 #' @param data dataset with variables with defined variable and value labels
 #' @param form formula. Independent variable must be on the right side of the formula. Function allows for only one dependent variable which will be shown in the columns
+#' @param pct.calc calculation of percentages. "by_dep" (default) calculates percentages by dependent variable, "by_ind" calculates percentages by independent variable
 #'
 #' @return flextable with results
 #' @export
@@ -16,7 +17,7 @@
 #'   var_to_labelled("dep2", "Dependent 2", c("1"="D", "2"="E", "3"="F"))
 #' #calculate test
 #' chisq.flex(dataset, dep1+dep2~ind)
-chisq.flex=function(data, form) {
+chisq.flex=function(data, form, pct.calc="by_dep") {
   #idi jednu po jednu varijablu
   vari_c <- formula.tools::rhs.vars(form)[1]
   vari_r <- formula.tools::lhs.vars(form)
@@ -107,12 +108,17 @@ chisq.flex=function(data, form) {
 
 
 
-chisq.sing <- function(data, form, post_hoc_chi = TRUE) {
+chisq.sing <- function(data, form, post_hoc_chi = TRUE, pct.calc="by_dep") {
   vari_c <- formula.tools::rhs.vars(form)[1]
   vari_r <- formula.tools::lhs.vars(form)[1]
 
 
-  table <- xtabs.flex(data, form)$tab.df
+  if (pct.calc=="by_dep") {table <- xtabs.flex(data, form)$tab.df
+  # u table je sad napravljena tablica gdje se postotci računaju prema redu. Treba ti i varijanta kada se računaju prema stupcu. To se radi tako da su ti varijable zamijenjene
+  } else {
+  table <- xtabs.flex(data, stats::as.formula(paste0(vari_c, "~", vari_r)))$tab.df
+  names(table)[1] <- check.labs(data[[vari_r]])$var_lab
+  }
 
 
 
