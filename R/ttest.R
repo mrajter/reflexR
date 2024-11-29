@@ -258,9 +258,9 @@ t.to.flex <- function(rez, data, deci, effect, nvars, lang = "hr") {
     for (i in 1:nrow(rez)){
       if (i%%2==0) {
         tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
-        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
-        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
-        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=6, part="body")
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=7, part="body")
+        tab <- tab %>% flextable::merge_at(i=(i-1):i, j=8, part="body")
         tab <- tab %>% flextable::hline(i = i, border = officer::fp_border(color = "black", width = 1), part = "body")
       }
     }

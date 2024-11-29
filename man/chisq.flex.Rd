@@ -4,12 +4,14 @@
 \alias{chisq.flex}
 \title{calculate chi square test for single independent and multiple dependent variables}
 \usage{
-chisq.flex(data, form)
+chisq.flex(data, form, pct.calc = "by_dep")
 }
 \arguments{
 \item{data}{dataset with variables with defined variable and value labels}
 
 \item{form}{formula. Independent variable must be on the right side of the formula. Function allows for only one dependent variable which will be shown in the columns}
+
+\item{pct.calc}{(do not use...yet) calculation of percentages. "by_dep" (default) calculates percentages by dependent variable, "by_ind" calculates percentages by independent variable}
 }
 \value{
 flextable with results
