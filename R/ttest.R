@@ -261,7 +261,7 @@ t.to.flex <- function(rez, data, deci, effect, nvars, lang = "hr") {
         tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
         tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
         tab <- tab %>% flextable::merge_at(i=(i-1):i, j=1, part="body")
-        tab <- tab %>% flextable::hline(i = br * 2, border = officer::fp_border(color = "black", width = 1), part = "body")
+        tab <- tab %>% flextable::hline(i = i, border = officer::fp_border(color = "black", width = 1), part = "body")
       }
     }
 
