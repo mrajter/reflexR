@@ -21,7 +21,7 @@ check.labs <- function(vari) {
   }
 
   # value labels
-  if (is.null(sjlabelled::get_labels(vari, values = "n", non.labelled = T))) {
+  if (is.null(sjlabelled::get_labels(vari, values = "n", non.labelled = T, attr.only = T))) {
     res$has_val_lab <- FALSE
     res$val_lab <- NA
   } else {
