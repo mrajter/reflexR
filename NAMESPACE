@@ -3,6 +3,7 @@
 export("%>%")
 export(check.labs)
 export(chisq.flex)
+export(codebook)
 export(comp.flex)
 export(cor.flex)
 export(des.flex)
