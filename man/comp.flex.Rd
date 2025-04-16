@@ -53,3 +53,9 @@ list with elements
 \description{
 Function creates basic comperimeter flextable with optional descriptives. Variables must be labelled.
 }
+\examples{
+\dontrun{
+comp.flex(data=rxR_data, form=1~education, param=TRUE, vals_to_labs=FALSE)
+}
+
+}

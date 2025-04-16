@@ -21,6 +21,12 @@
 #'     \item orientation - suggested page orientation (P/L)
 #'     \item legend - vector of value labels for column headings
 #' }
+#'
+#' @examples
+#' \dontrun{
+#' comp.flex(data=rxR_data, form=1~education, param=TRUE, vals_to_labs=FALSE)
+#' }
+#'
 #' @export
 comp.flex <- function(data, form, by = NA, by_total = TRUE, param = TRUE, vals_to_labs=TRUE, m.deci = 1, p.deci = 1, title = "", option = r.flex.opts) {
   # get variable names - important only for title
@@ -113,6 +119,10 @@ comp.flex <- function(data, form, by = NA, by_total = TRUE, param = TRUE, vals_t
     start_comp <- ncol(res)-nrow(check.labs(data[[vars[1]]])$val_lab)+1 #column where the comperimeter starts
     end_comp <- ncol(res) #end column
     names(res)[start_comp:end_comp] <- check.labs(data[[vars[1]]])$val_lab$value
+  } else {
+    start_comp <- ncol(res)-nrow(check.labs(data[[vars[1]]])$val_lab)+1 #column where the comperimeter starts
+    end_comp <- ncol(res) #end column
+    names(res)[start_comp:end_comp] <- check.labs(data[[vars[1]]])$val_lab$label
   }
 
   if (is.na(by) == FALSE) {
