@@ -149,7 +149,7 @@ comp.flex <- function(data, form, by = NA, by_total = TRUE, param = TRUE, vals_t
     legend <- check.labs(data[[vars[1]]])$val_lab
     legend$legend <- paste0(legend$value, " - ", legend$label)
   } else {
-    legend$legend <- "not needed"
+    legend <- list(legend="not needed")
   }
   result <- list(type = type, title = title, section = title.by, table = table, tab.df = res, orientation=orientation, legend=legend$legend)
 
